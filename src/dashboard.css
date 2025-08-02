@@ -1,0 +1,103 @@
+
+.container2 {
+  max-width: 960px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.user-toggle {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.user-toggle button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background: #e0e0e0;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.user-toggle .active {
+  background-color: #007bff;
+  color: white;
+}
+
+.section {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 10px;
+  min-width: 280px;
+}
+
+.edit {
+  color: #007bff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.orders {
+  margin-top: 40px;
+}
+
+.orders table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.orders th,
+.orders td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.orders img {
+  width: 50px;
+}
+
+.manage {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+input[type='text'] {
+  padding: 8px;
+  margin-top: 10px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 1rem;
+}
+
+
+@media screen and (max-width: 768px) {
+  .section {
+    flex-direction: column;
+  }
+
+  .card {
+    width: 100%;
+  }
+}
