@@ -61,7 +61,7 @@ function AppContent() {
 // Main App component that includes the Router
 function App() {
   return (
-    <Router basename="/WearUp">
+    <Router>
       <AppContent />
     </Router>
   );
