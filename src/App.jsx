@@ -17,7 +17,7 @@ import Dashboard from './Components/dashboard.jsx';
 import ProtectedRoute from './Components/ProtectedRoute';
 import SellerProfile from './Components/SellerProfile';
 import CartPage from './Components/cart';
-import Documentation from './Components/documentation.jsx';
+import Documentation from './Components/Documentation.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function AppContent() {
