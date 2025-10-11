@@ -19,7 +19,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { API_BASE } from "../config";
+import { API_BASE, MEDIA_BASE } from "../config";
 function SellerProfile() {
   const navigate = useNavigate();
   const { id: sellerId } = useParams();
@@ -159,14 +159,16 @@ function SellerProfile() {
         website: profileData.website || "",
         phone: profileData.phone || "",
       });
+      const defaultProfileImage = "https://s-media-cache-ak0.pinimg.com/originals/51/83/ef/5183ef65b82a66cf573f324e59cf028b.jpg";
       setProfileImage(
-        profileData.profile_image ||
-                   "https://s-media-cache-ak0.pinimg.com/originals/51/83/ef/5183ef65b82a66cf573f324e59cf028b.jpg"
-
+        profileData.profile_image 
+          ? (profileData.profile_image.startsWith('http') ? profileData.profile_image : `${MEDIA_BASE}${profileData.profile_image}`)
+          : defaultProfileImage
       );
       setCoverImage(
-        profileData.cover_image ||
-          coverPhotoPlaceholder
+        profileData.cover_image 
+          ? (profileData.cover_image.startsWith('http') ? profileData.cover_image : `${MEDIA_BASE}${profileData.cover_image}`)
+          : coverPhotoPlaceholder
       );
     } catch (err) {
       setError(err.message);
@@ -239,7 +241,12 @@ function SellerProfile() {
           throw new Error("Failed to fetch seller products");
         }
         const productsData = await response.json();
-        setProducts(productsData);
+        // Prepend MEDIA_BASE to product images if they are relative paths
+        const updatedProducts = productsData.map(product => ({
+          ...product,
+          image: product.image ? (product.image.startsWith('http') ? product.image : `${MEDIA_BASE}${product.image}`) : null
+        }));
+        setProducts(updatedProducts);
       } else if (token && user && user.id) {
         url = `${API_BASE}/products/?seller=${user.id}`;
         const response = await authFetch(url);
@@ -247,7 +254,12 @@ function SellerProfile() {
           throw new Error("Failed to fetch products");
         }
         const productsData = await response.json();
-        setProducts(productsData);
+        // Prepend MEDIA_BASE to product images if they are relative paths
+        const updatedProducts = productsData.map(product => ({
+          ...product,
+          image: product.image ? (product.image.startsWith('http') ? product.image : `${MEDIA_BASE}${product.image}`) : null
+        }));
+        setProducts(updatedProducts);
       }
     } catch (err) {
       setError(err.message);
