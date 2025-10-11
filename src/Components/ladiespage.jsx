@@ -172,14 +172,12 @@ export default function App() {
               },
           images:
             product.images && product.images.length > 0
-              ? product.images.map((img) =>
-                  img.image.startsWith("http")
+              ? product.images.map((img) => {
+                  if (!img.image) return null;
+                  return img.image.startsWith("http")
                     ? img.image
-                    : (() => {
-                        const normalized = img.image.replace(/^\/+/, "").replace(/^media\//, "");
-                        return `${MEDIA_BASE}/media/${normalized}`;
-                      })()
-                )
+                    : `${MEDIA_BASE}${img.image}`;
+                }).filter(Boolean)
               : [
                   "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjNmI3MjgwIi8+Cjx0ZXh0IHg9IjE1MCIgeT0iMTUwIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iMC41ZW0iPk5vIEltYWdlPC90ZXh0Pgo8L3N2Zz4=",
                 ],
