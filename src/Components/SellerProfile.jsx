@@ -19,6 +19,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { API_BASE } from "../config";
 function SellerProfile() {
   const navigate = useNavigate();
   const { id: sellerId } = useParams();
@@ -58,7 +59,6 @@ function SellerProfile() {
   });
   const editImageRef = useRef(null);
 
-  const API_BASE = "http://127.0.0.1:8000/api";
   const token = localStorage.getItem("access_token");
 
   const authFetch = async (url, options = {}) => {
