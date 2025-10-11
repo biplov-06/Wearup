@@ -244,7 +244,10 @@ function SellerProfile() {
         // Prepend MEDIA_BASE to product images if they are relative paths
         const updatedProducts = productsData.map(product => ({
           ...product,
-          image: product.image ? (product.image.startsWith('http') ? product.image : `${MEDIA_BASE}${product.image}`) : null
+          image: product.image ? (product.image.startsWith('http') ? product.image : (() => {
+            const normalized = product.image.replace(/^\/+/, "").replace(/^media\//, "");
+            return `${MEDIA_BASE}/media/${normalized}`;
+          })()) : null
         }));
         setProducts(updatedProducts);
       } else if (token && user && user.id) {
@@ -257,7 +260,10 @@ function SellerProfile() {
         // Prepend MEDIA_BASE to product images if they are relative paths
         const updatedProducts = productsData.map(product => ({
           ...product,
-          image: product.image ? (product.image.startsWith('http') ? product.image : `${MEDIA_BASE}${product.image}`) : null
+          image: product.image ? (product.image.startsWith('http') ? product.image : (() => {
+            const normalized = product.image.replace(/^\/+/, "").replace(/^media\//, "");
+            return `${MEDIA_BASE}/media/${normalized}`;
+          })()) : null
         }));
         setProducts(updatedProducts);
       }

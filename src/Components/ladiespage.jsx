@@ -116,7 +116,7 @@ export default function App() {
     // Always fetch all products
     let fetchUrl = `${API_BASE}/products/`;
 
-    authFetch(fetchUrl)
+    fetch(fetchUrl)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
