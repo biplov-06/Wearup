@@ -356,7 +356,13 @@ export default function CartPage() {
             ) : (
               cartItems.map(item => (
                 <div key={item.id} style={styles.cartItem}>
-                  <img src={`${MEDIA_BASE}${item.product.image}`} alt={item.product.product_name} style={styles.itemImage} />
+                  <img src={item.product.image.startsWith("http")
+                    ? item.product.image
+                    : (() => {
+                        const normalized = item.product.image.replace(/^\/+/, "").replace(/^media\//, "");
+                        return `${MEDIA_BASE}/media/${normalized}`;
+                      })()
+                  } alt={item.product.product_name} style={styles.itemImage} />
                   <div style={styles.itemDetails}>
                     <h3 style={styles.itemName}>{item.product.product_name}</h3>
                     <div style={styles.itemPrice}>NPR {(parseFloat(item.product.price) || 0).toFixed(2)}</div>

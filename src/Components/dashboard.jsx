@@ -611,8 +611,14 @@ function Dashboard() {
                   >
                     <div className="product-image-wrapper">
                       <img
-                        src={`${MEDIA_BASE}${product.image}`}
-                        alt={product.name}
+                        src={product.image.startsWith("http")
+                          ? product.image
+                          : (() => {
+                              const normalized = product.image.replace(/^\/+/, "").replace(/^media\//, "");
+                              return `${MEDIA_BASE}/media/${normalized}`;
+                            })()
+                        }
+                        alt={product.product_name}
                         className="product-image"
                       />
                       <div
