@@ -66,6 +66,74 @@ const App = () => {
     }
   };
 
+  const authFetch = async (url, options = {}) => {
+    const currentToken = localStorage.getItem("access_token");
+    const headers = {
+      ...options.headers,
+    };
+    // Don't set Content-Type for FormData, let browser set it to multipart/form-data
+    if (!(options.body instanceof FormData)) {
+      headers["Content-Type"] = "application/json";
+    }
+    if (currentToken) {
+      headers["Authorization"] = `Bearer ${currentToken}`;
+    }
+
+    let response = await fetch(url, { ...options, headers });
+
+    if (response.status === 401) {
+      // Try to refresh token
+      const refreshToken = localStorage.getItem("refresh_token");
+      if (refreshToken) {
+        try {
+          const refreshResponse = await fetch(
+            `${API_BASE}/auth/token/refresh/`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ refresh: refreshToken }),
+            }
+          );
+          if (refreshResponse.ok) {
+            const refreshData = await refreshResponse.json();
+            localStorage.setItem("access_token", refreshData.access);
+            // Retry original request with new token
+            headers["Authorization"] = `Bearer ${refreshData.access}`;
+            response = await fetch(url, { ...options, headers });
+          } else {
+            // Refresh failed, logout
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+            localStorage.removeItem("user");
+            alert("Session expired. Please login again.");
+            window.location.href = "/login";
+            return;
+          }
+        } catch (error) {
+          // Refresh failed, logout
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          localStorage.removeItem("user");
+          alert("Session expired. Please login again.");
+          window.location.href = "/login";
+          return;
+        }
+      } else {
+        // No refresh token, logout
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        localStorage.removeItem("user");
+        alert("Please login to add products.");
+        window.location.href = "/login";
+        return;
+      }
+    }
+
+    return response;
+  };
+
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -87,11 +155,30 @@ const App = () => {
         }
       });
 
-      // Simulated API call
-      alert('Product added successfully!');
+      const response = await authFetch(`${API_BASE}/products/`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        alert('Product added successfully!');
+        // Reset form
+        setProductName('');
+        setDescription('');
+        setGender('');
+        setPrice('');
+        setStock(0);
+        setSelectedSizes([]);
+        setCategories([]);
+        setMainImage(null);
+        setAdditionalImages([null, null, null]);
+      } else {
+        const errorData = await response.json();
+        alert(`Error adding product: ${errorData.detail || 'Unknown error'}`);
+      }
     } catch (error) {
       console.error('Error adding product:', error);
-      alert('Error adding product');
+      alert('Error adding product. Please try again.');
     } finally {
       setLoading(false);
     }

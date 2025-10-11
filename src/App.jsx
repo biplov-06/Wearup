@@ -40,13 +40,13 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/add-product" element={<ProtectedRoute><AddProduct /></ProtectedRoute>} />
-        <Route path="/explore" element={<ProtectedRoute><Ladies /></ProtectedRoute>} />
-        <Route path="/shop" element={<ProtectedRoute><Ladies /></ProtectedRoute>} />
-        <Route path="/menwear" element={<ProtectedRoute><Ladies /></ProtectedRoute>} />
-        <Route path="/ladieswear" element={<ProtectedRoute><Ladies /></ProtectedRoute>} />
-        <Route path="/unisex" element={<ProtectedRoute><Ladies /></ProtectedRoute>} />
+        <Route path="/explore" element={<Ladies />} />
+        <Route path="/shop" element={<Ladies />} />
+        <Route path="/menwear" element={<Ladies />} />
+        <Route path="/ladieswear" element={<Ladies />} />
+        <Route path="/unisex" element={<Ladies />} />
         <Route path="/dashboard/:id?" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        <Route path="/product" element={<ProtectedRoute><Ladies /></ProtectedRoute>} />
+        <Route path="/product" element={<Ladies />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/seller/:id" element={<ProtectedRoute><SellerProfile /></ProtectedRoute>} />
         <Route path="/cart" element={<CartPage />} />
