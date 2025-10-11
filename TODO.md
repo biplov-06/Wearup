@@ -15,6 +15,9 @@
 ## Image 404 Fix
 - [x] Modify serializers to return local URLs for DEBUG mode
 - [x] Test image loading on localhost
+- [x] Upload local media to Cloudinary with correct public IDs
+- [x] Update settings.py for conditional storage
+- [x] Commit and push changes
 
 ## Followup
 - [ ] Test in development mode
