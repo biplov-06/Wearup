@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE } from '../config';
 import '../login.css';
 import '../App.css';
 
@@ -23,7 +24,7 @@ const Signup = () => {
     const lastName = lastNameParts.join(' ');
 
     try {
-      const response = await fetch('http://localhost:8000/api/auth/register/', {
+      const response = await fetch(`${API_BASE}/auth/register/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +46,6 @@ const Signup = () => {
         localStorage.setItem('user', JSON.stringify(data.user));
         nav('/dashboard');
       } else {
-        console.log('Registration error:', data);
         const errorMessages = [];
         if (data.username) errorMessages.push(`Username: ${data.username.join(', ')}`);
         if (data.email) errorMessages.push(`Email: ${data.email.join(', ')}`);

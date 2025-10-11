@@ -88,7 +88,6 @@ const App = () => {
       });
 
       // Simulated API call
-      console.log('Form submitted:', Object.fromEntries(formData));
       alert('Product added successfully!');
     } catch (error) {
       console.error('Error adding product:', error);

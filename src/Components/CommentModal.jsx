@@ -8,9 +8,6 @@ export default function CommentModal({ productId, isOpen, onClose }) {
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  // Debug logging
-  console.log('CommentModal props:', { productId, isOpen, onClose });
-
   useEffect(() => {
     if (isOpen && productId) {
       fetchComments();

@@ -30,7 +30,6 @@ function HeroSection() {
 
   const handleShopNow = () => {
     // Replace with your routing logic
-    console.log("Navigate to shop");
   };
 
   return (

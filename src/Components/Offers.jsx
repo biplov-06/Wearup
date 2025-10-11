@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "../config";
 import Img1 from "../assets/google.svg";
 import Img2 from "../assets/facebook.svg";
 import '../App.css';
@@ -28,7 +29,7 @@ const Offers = () => {
     const lastName = lastNameParts.join(" ");
 
     try {
-      const response = await fetch("http://localhost:8000/api/auth/register/", {
+      const response = await fetch(`${API_BASE}/auth/register/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

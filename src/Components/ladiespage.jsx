@@ -227,17 +227,13 @@ export default function App() {
   };
 
   const handleCommentClick = (post) => {
-    console.log("Comment button clicked for post:", post);
     setSelectedCommentProductId(post.id);
     setIsCommentModalOpen(true);
-    console.log("selectedCommentProductId set to:", post.id);
-    console.log("isCommentModalOpen set to: true");
   };
 
   const closeCommentModal = () => {
     setSelectedCommentProductId(null);
     setIsCommentModalOpen(false);
-    console.log("Comment modal closed");
   };
 
   const handleLike = async (id) => {
